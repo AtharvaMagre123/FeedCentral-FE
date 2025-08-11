@@ -51,12 +51,12 @@ useEffect(()=>{
       <CreateContentModal open={modalOpen} OnClose={() => {setModalOpen(false)}} />
       
       {/* Username Display */}
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">
+      <div className="flex mb-6 justify-between">
+      <div>
+      <h1 className="text-2xl font-bold text-white">
           Welcome back, {localStorage.getItem("username") || "User"}! 👋
         </h1>
       </div>
-      
       <div className="flex justify-end gap-4 ">
         <Button
           startIcon={<Plusicon size="md" />}
@@ -81,6 +81,8 @@ useEffect(()=>{
           loading={false}
           onClick={handleLogout}
         />
+      </div>
+
       </div>
 
       <div className="flex mt-9 gap-3 flex-wrap">
