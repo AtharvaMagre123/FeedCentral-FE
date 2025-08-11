@@ -26,6 +26,7 @@ const [ContentType,setContentType]=useState<"youtube" | "twitter" | "all">("all"
 
 const handleLogout = () => {
   localStorage.removeItem("token");
+  localStorage.removeItem("username");
   navigate("/signin");
 };
 
@@ -48,6 +49,14 @@ useEffect(()=>{
       <Sidebar setContentType={setContentType} contentType={ContentType}/>
       <div className="p-4 ml-60 min-h-screen">
       <CreateContentModal open={modalOpen} OnClose={() => {setModalOpen(false)}} />
+      
+      {/* Username Display */}
+      <div className="mb-6">
+        <h1 className="text-2xl font-bold text-gray-800">
+          Welcome back, {localStorage.getItem("username") || "User"}! 👋
+        </h1>
+      </div>
+      
       <div className="flex justify-end gap-4 ">
         <Button
           startIcon={<Plusicon size="md" />}
