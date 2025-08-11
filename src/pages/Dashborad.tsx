@@ -6,6 +6,7 @@ import { Plusicon } from "../icons/Plusicon";
 import { ShareIcon } from "../icons/ShareIcon";
 import { Sidebar } from "../components/ui/Sidebar";
 import { useContent } from "../hooks/useContent";
+import { useNavigate } from "react-router-dom";
 
 interface ContentItem {
   title: string;
@@ -19,12 +20,27 @@ export function Dashboard() {
 
 
 const [modalOpen,setModalOpen] = useState(false)
+const navigate = useNavigate();
 const {content,fetchContent}=useContent();
 const [ContentType,setContentType]=useState<"youtube" | "twitter" | "all">("all");
 
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  navigate("/signin");
+};
+
+
 useEffect(()=>{
+  // Check if user is authenticated
+  const token = localStorage.getItem("token");
+  if (!token) {
+    navigate("/signin");
+    return;
+  }
+  
+  // If authenticated, fetch content
   fetchContent();
-},[modalOpen])
+},[modalOpen, navigate, fetchContent])
 
 
   return (
@@ -48,6 +64,13 @@ useEffect(()=>{
           text="Share"
           loading={false}
           onClick={() => {}}
+        />
+        <Button
+          size="sm"
+          variant="secondary"
+          text="Logout"
+          loading={false}
+          onClick={handleLogout}
         />
       </div>
 
